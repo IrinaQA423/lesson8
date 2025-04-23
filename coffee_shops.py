@@ -4,7 +4,6 @@ import folium
 from geopy import distance
 import os
 from dotenv import load_dotenv
-load_dotenv()
 
 
 
@@ -31,6 +30,7 @@ def get_distance(result):
 
 
 def main():
+    load_dotenv()
     with open("coffee.json", "r", encoding="CP1251") as coffee_shops:
         coffee_json = coffee_shops.read()
     coffee_shops = json.loads(coffee_json)
@@ -38,7 +38,6 @@ def main():
     where_are_you = input("Где Вы находитесь?")
     apikey = os.getenv('APIKEY') 
     coords1 = fetch_coordinates(apikey, where_are_you)
-    print(f"Ваши  координаты: {coords1}")
     results = []
 
     for coffee_shop in coffee_shops:
@@ -53,7 +52,7 @@ def main():
             'distance': coffee_shop_distance,
             'latitude': coffee_shop_latitude,
             'longitude': coffee_shop_longitude
-            })
+        })
 
     sorted_coffee_shops = sorted(results, key=get_distance)
     sorted_coffee_shops5 = sorted_coffee_shops[:5]
